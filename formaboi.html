@@ -1,0 +1,181 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>How Are You Today?</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            text-align: center;
+            padding: 20px;
+        }
+
+        .question {
+            margin: 20px 0;
+            font-size: 24px;
+        }
+
+        .button {
+            margin: 10px;
+            padding: 10px 20px;
+            font-size: 18px;
+            background-color: lightgray;
+            border: none;
+            cursor: pointer;
+            border-radius: 5px;
+        }
+
+        .button:hover {
+            background-color: gray;
+            color: white;
+        }
+
+        .message {
+            display: none;
+            margin-top: 20px;
+            padding: 20px;
+            border-radius: 10px;
+            font-size: 18px;
+            color: black;
+            background-color: white;
+        }
+
+        #not-tired-message {
+            background-color: lightblue;
+            border: 2px solid white;
+        }
+
+        /* Container for floating elements */
+        .hearts-container,
+        .flowers-container {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100vh;
+            overflow: hidden;
+            pointer-events: none; /* Disable interaction */
+        }
+
+        /* CSS for hearts */
+        .small-heart {
+            position: absolute;
+            width: 15px;
+            height: 15px;
+            background-color: red;
+            border-radius: 50%;
+            transform: rotate(-45deg);
+            animation: float 5s infinite;
+        }
+
+        .small-heart::before,
+        .small-heart::after {
+            content: "";
+            position: absolute;
+            width: 15px;
+            height: 15px;
+            background-color: red;
+            border-radius: 50%;
+        }
+
+        .small-heart::before {
+            top: -7.5px;
+            left: 0;
+        }
+
+        .small-heart::after {
+            left: 7.5px;
+            top: 0;
+        }
+
+        /* CSS for flowers */
+        .small-flower {
+            position: absolute;
+            width: 30px;
+            height: 30px;
+            background-color: pink;
+            border-radius: 50%;
+            animation: floatFlower 7s infinite;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            font-size: 24px;
+            color: white;
+        }
+
+        @keyframes float {
+            0% { transform: translateY(100vh) rotate(-45deg); }
+            100% { transform: translateY(-100vh) rotate(-45deg); }
+        }
+
+        @keyframes floatFlower {
+            0% { transform: translateY(100vh); }
+            100% { transform: translateY(-100vh); }
+        }
+
+    </style>
+</head>
+<body>
+    <div class="question">วันนี้เป็นยังไงบ้าง?</div>
+    <button class="button" onclick="showMessage('tired')">เหนื่อย</button>
+    <button class="button" onclick="showMessage('notTired')">ไม่เหนื่อย</button>
+
+    <div id="tired-message" class="message">
+        เก่งมากแล้วค่ะน้องเวฟ วันนี้ผ่านไปแล้ว ต่อให้พรุ่งนี้จะเหนื่อยอีก หนูจะยังมีพี่อยู่ข้าง ๆ คอยมองการเติบโตของหนูอยู่เสมอนะคะ
+    </div>
+
+    <div id="not-tired-message" class="message">
+        ดีแล้ว เก่งมาก ถึงจะมีวันที่เหนื่อย แต่หนูก็ผ่านไปได้ด้วยตัวเองและมีพี่เป็นกำลังใจให้อยู่แล้ว!
+    </div>
+
+    <div id="hearts-container" class="hearts-container"></div>
+    <div id="flowers-container" class="flowers-container"></div>
+
+    <script>
+        function showMessage(option) {
+            const tiredMessage = document.getElementById('tired-message');
+            const notTiredMessage = document.getElementById('not-tired-message');
+            const heartsContainer = document.getElementById('hearts-container');
+            const flowersContainer = document.getElementById('flowers-container');
+
+            // Clear messages and decorations initially
+            tiredMessage.style.display = 'none';
+            notTiredMessage.style.display = 'none';
+            heartsContainer.innerHTML = ''; // Clear hearts
+            flowersContainer.innerHTML = ''; // Clear flowers
+
+            if (option === 'tired') {
+                tiredMessage.style.display = 'block';
+                document.body.style.backgroundColor = 'pink'; // Change background to pink
+                
+                // Generate small flowers for decoration
+                for (let i = 0; i < 50; i++) {
+                    const flower = document.createElement('div');
+                    flower.classList.add('small-flower');
+                    flower.style.left = Math.random() * window.innerWidth + 'px';
+                    flower.style.animationDelay = Math.random() * 5 + 's';
+                    flower.innerHTML = '🌸'; // Add flower emoji
+                    flowersContainer.appendChild(flower);
+                }
+
+            } else if (option === 'notTired') {
+                notTiredMessage.style.display = 'block';
+                document.body.style.backgroundColor = 'lightblue'; // Change background to light blue
+                
+                // Generate small hearts for decoration
+                for (let i = 0; i < 50; i++) {
+                    const heart = document.createElement('div');
+                    heart.classList.add('small-heart');
+                    heart.style.left = Math.random() * window.innerWidth + 'px';
+                    heart.style.animationDelay = Math.random() * 5 + 's';
+                    heartsContainer.appendChild(heart);
+                }
+            }
+        }
+    </script>
+</body>
+</html>
+
+
+
